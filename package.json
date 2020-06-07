@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "parcel src/index.html",
+    "prebuild": "rm -rf dist",
+    "build": "NODE_ENV=production parcel build src/index.html --out-dir dist",
     "format": "prettier \"src/**/*.{js,html}\" --write",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet",
     "test": "echo \"Error: no test specified\" && exit 1"
