@@ -23,7 +23,7 @@ const UploadForm = () => {
       url: imgurUploadUrl,
       data: formData,
       headers: {
-        Authorization: "Client-ID 14254dcd74b36d3",
+        Authorization: "",
         "Content-Type": "multipart/form-data"
       }
     })
