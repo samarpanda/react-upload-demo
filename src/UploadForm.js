@@ -1,39 +1,42 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import axios from "axios";
 import Image from "./Image";
 
 const imgurUploadUrl = "https://api.imgur.com/3/image";
 
+function postApi(data) {
+  var formData = new FormData();
+  formData.append("image", data, data.name);
+
+  return axios({
+    method: "post",
+    url: imgurUploadUrl,
+    data: formData,
+    headers: {
+      Authorization: "",
+      "Content-Type": "multipart/form-data"
+    }
+  });
+}
+
 const UploadForm = () => {
   const [title, setTitle] = useState("");
   const [imgUrl, setImgUrl] = useState("");
-
-  function onChangeHandler(e) {
+  const onChangeHandler = useCallback((e) => {
     e.preventDefault();
     setTitle("");
     setImgUrl("");
 
     let files = e.target.files;
     let data = files[0];
-    var formData = new FormData();
-    formData.append("image", data, data.name);
-
-    axios({
-      method: "post",
-      url: imgurUploadUrl,
-      data: formData,
-      headers: {
-        Authorization: "",
-        "Content-Type": "multipart/form-data"
-      }
-    })
+    postApi(data)
       .then((res) => {
         let resData = res.data.data;
         setTitle("dummy yo");
         setImgUrl(resData.link);
       })
       .catch((e) => console.error(e));
-  }
+  }, []);
 
   return (
     <div>
